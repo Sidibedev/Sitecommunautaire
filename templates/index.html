@@ -315,8 +315,7 @@ html, body {
           <a href="#overview" class="mdl-layout__tab is-active">ALL POSTS</a>
           <a href="#features" class="mdl-layout__tab">WRITE A POST</a>
           <a href="#search" class="mdl-layout__tab">SEARCH A POST</a>
-          <a href="#features" class="mdl-layout__tab">MOST POPULAR POST</a>
-          <a href="#features" class="mdl-layout__tab">FAQ</a>
+          
           <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent" id="add">
             <i class="material-icons" role="presentation">add</i>
             <a href="#features"></a>
@@ -369,15 +368,18 @@ html, body {
               
 
               <div class="mdl-card__actions">
-                <a href="#" class="mdl-button">Read More</a>
-                <a href="#" class="mdl-button">Comment</a>
+                <a href="./readmore?idreadmore={{article._id}}" class="mdl-button">Read More</a>
+               
                 <a href="./update?idmodif={{article._id}}" class="mdl-button">Update</a>
                 <a href="./delete?id={{article._id}}" class="mdl-button">Delete</a>
+                <a href="#" class="mdl-button">{{article.date_creation}}</a>
+
+             
               </div>
             </div>
 
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="btn1">
-              <i class="material-icons">more_vert</i>
+              
             </button>
             <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="btn1">
               <li class="mdl-menu__item">Lorem</li>
@@ -422,6 +424,10 @@ html, body {
                                 <label for="exampleTextarea">E-mail</label>
                                 <input class="form-control" name="email" rows="3" type="E-mail">
                             </div>
+                             <div class="form-group">
+                                <label for="exampleTextarea">Category</label>
+                                <input class="form-control" name="cat" rows="3">
+                            </div>
 
 
 
@@ -457,7 +463,7 @@ html, body {
                                     <option value="prenom">author first name<option>
                                      <option value="nom">author last name<option>
                                         <option value="titre"> title <option>
-                                           <option value="categorie">Category<option>
+                                           <option value="categories">Category<option>
 
 
                                 </select>

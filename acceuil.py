@@ -3,6 +3,7 @@
 from flask import Flask  
 from flask_pymongo import PyMongo
 from flask import render_template , request ,redirect
+import datetime
 from bson.objectid import ObjectId
 
 app = Flask(__name__)
@@ -23,19 +24,22 @@ def index():
 def hello():
     return 'Hello, World'
 
-
+    
 @app.route('/send' , methods= ['POST'])
 def add():
    article = mongo.db.articles
+   date = datetime.datetime.now()
    articles = mongo.db.articles.find()
    if request.method == 'POST':
-   	prenom = request.form['prenom']
-   	nom = request.form['nom']
-   	email = request.form['email']
-   	titre = request.form['titre']
-   	article.insert_one({'titre' : titre , 'auteur' : { 'nom' : nom , 'prenom' : prenom , 'email' : email} })
+    prenom = request.form['prenom']
+    nom = request.form['nom']
+    email = request.form['email']
+    cat = request.form['cat']
+    titre = request.form['titre']
+    article.insert_one({ 'date_creation' : date ,'categories' : cat ,'titre' : titre , 'auteur' : { 'nom' : nom , 'prenom' : prenom , 'email' : email} })
 
-   return render_template('index.html' , articles=articles)	
+    return render_template('index.html' , articles=articles)	
+   
     
 
 @app.route('/delete')
@@ -73,7 +77,24 @@ def search():
     return render_template('search.html' , articlesearch=articlesearch)
 
 
+@app.route('/readmore') 
+def readmore():
+    article = mongo.db.articles
+    id=request.values.get("idreadmore")
+    articlereadmore = mongo.db.articles.find({"_id":ObjectId(id)})
+    return render_template('readmore.html', articlereadmore=articlereadmore)
 
+
+@app.route('/comment' , methods = ['POST'])
+def comment():
+    idcomment=request.form['idarticlecomment']
+    article = mongo.db.articles
+    articlereadmore = mongo.db.articles.find({"_id":ObjectId(idcomment)})
+    datecomment= datetime.datetime.now()
+    email = request.form['emailcomment']
+    commentaire = request.form['commentaire']
+    article.update({"_id":ObjectId(idcomment)}, {'$set':{  "commentaires"  : {"date" : datecomment , "auteur" : email , "contenu" : commentaire }  }})
+    return render_template('readmore.html' , articlereadmore=articlereadmore)
 
 
 
